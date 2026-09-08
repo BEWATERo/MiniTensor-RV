@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 results/waveforms/*.vcd
 results/reports/*
+dump.vcd
+results.xml

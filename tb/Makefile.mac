@@ -1,0 +1,12 @@
+TOPLEVEL_LANG := verilog
+SIM ?= icarus
+
+PROJECT_ROOT := $(abspath .)
+VERILOG_SOURCES := $(PROJECT_ROOT)/rtl/mac_int8.sv
+TOPLEVEL := mac_int8
+COCOTB_TEST_MODULES := test_mac_int8
+export PYTHONPATH := $(PROJECT_ROOT)/tb:$(PROJECT_ROOT)/model
+SIM_BUILD := $(PROJECT_ROOT)/build/cocotb_mac
+COMPILE_ARGS += -g2012
+
+include $(shell $(PROJECT_ROOT)/.venv/bin/cocotb-config --makefiles)/Makefile.sim

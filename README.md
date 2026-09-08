@@ -4,7 +4,7 @@
 
 ## 当前里程碑
 
-**V0：同步复位累加器**
+**V1：有符号 INT8 MAC**
 
 ```text
 输入 x --┐
@@ -13,12 +13,13 @@ acc  ----┘             ↑
                        clk
 ```
 
-当前模块行为：
+V0 同步复位累加器已经完成。当前 MAC 模块行为：
 
-- `rst=1`：在时钟上升沿将 `acc` 清零；
-- `en=1`：在时钟上升沿执行 `acc <= acc + x`；
-- `en=0`：保持 `acc` 不变；
-- 输出 `acc` 为 32 位无符号值。
+- `a`、`b` 为有符号 INT8；
+- 内部乘积为有符号 INT16；
+- `acc` 为有符号 INT32；
+- `rst > clear > valid > hold`；
+- 使用 cocotb 对照独立 Python golden model 进行定向和随机验证。
 
 ## 运行
 
@@ -26,6 +27,7 @@ acc  ----┘             ↑
 cd ~/projects/MiniTensor-RV
 make test
 make lint
+make synth-mac
 ```
 
 波形文件位于 `results/waveforms/accumulator.vcd`，如果 WSLg 或 X11 可用，可以执行：
@@ -46,8 +48,8 @@ make wave
 ## 路线
 
 ```text
-V0 累加器
-→ V1 INT8 MAC
+V0 累加器（完成）
+→ V1 INT8 MAC（完成）
 → V2 2×2 PE 脉动阵列
 → V3 可配置 4×4 GEMM 加速器
 → V4 RISC-V MMIO 控制
